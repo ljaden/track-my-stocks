@@ -1,0 +1,21 @@
+
+<% if(stock.news){%>
+  <h2>News</h2>
+
+  <% for(let i=0;i<5; i++){%>
+    <div style="border: 2px solid black; width:800px; padding: 5px;display: flex;flex-direction: column;align-items: center;margin-bottom: 10px;">
+      
+      <h3><%= stock.news[i].title %></h3>
+      
+      <img src= <%=stock.news[i].banner_image%> alt="banner_img" style="max-width:80%;">
+      <p><%= stock.news[i].summary %></p>
+      
+      <p>
+        <%= stock.news[i].source %> 
+        <a href= <%=stock.news[i].url%> target="_blank">Link</a>
+      </p>
+      
+    </div>
+  <%}%>
+  
+<%}%>

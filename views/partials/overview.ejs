@@ -1,0 +1,29 @@
+<div class="row align-items-center">
+  <div class="col-auto">
+    <img style="max-width:90px;" src="https://financialmodelingprep.com/image-stock/<%= stock.overview ? stock.overview.Symbol : stock.quote['01. symbol']%>.jpg" alt="logo">
+  </div>
+
+  <% if(stock.overview && stock.quote){%>
+
+  <div class="col-sm mb-2 mb-sm-0">
+    <h1>
+      <%=stock.overview.Name%> (<%= stock.overview.Symbol %>)
+    </h1>
+    <strong>$<%=Number(stock.quote["05. price"]).toFixed(2)%></strong>
+    <small><%=stock.quote["10. change percent"]%></small>
+    <small><%=stock.overview.Exchange%></small>
+  </div>
+  
+</div>
+
+<p style="width: 500px"><%= stock.overview.Description %></p>
+
+<%} else if(stock.quote){%>
+
+  <div class="col-sm mb-2 mb-sm-0">
+    <h1><%=stock.quote["01. symbol"]%></h1>
+
+    <strong>$<%=Number(stock.quote["05. price"]).toFixed(2)%></strong>
+    <small><%=stock.quote["10. change percent"]%></small>
+  </div>
+<%}%>
