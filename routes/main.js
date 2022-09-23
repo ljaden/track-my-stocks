@@ -1,10 +1,16 @@
-// const express = require("express");
-// const router = express.Router();
+const express = require("express");
+const router = express.Router();
+const authController = require("../controllers/auth");
+const indexController = require("../controllers/index");
+const { ensureAuth, ensureGuest } = require("../middleware/auth");
 
-// // const { getIndex, postSearch } = require("../controllers/index");
+router.get("/", indexController);
+router.post("/", authController.postSignup);
+// router.get("/profile", ensureAuth);
+router.get("/login", authController.getLogin);
+router.post("/login", authController.postLogin);
+router.get("/logout", authController.logout);
+router.get("/signup", authController.getSignup);
+router.post("/signup", authController.postSignup);
 
-// // router.get("/", getIndex);
-// // router.post("/", postSearch);
-
-// // router.post("/api/tickers", searchEndpoint);
-// module.exports = router;
+module.exports = router;

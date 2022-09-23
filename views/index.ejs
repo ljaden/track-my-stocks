@@ -1,0 +1,38 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+
+
+<div class="wrapper">
+  <h1>The Stonks Tracker App</h1>
+</div>
+
+<div class="wrapper">
+  <small>Track all your STONKS in one place</small>
+</div>
+
+<div class="wrapper">
+  <div class="loginContainer">
+    <form action="/signup" method="POST">
+      <fieldset>
+        <legend><h1>REGISTER</h1></legend>
+        
+        <!-- <input type="text" name="fullname" placeholder="Full Name" value= "" required> -->
+        
+        <input type="text" name="username" placeholder="Username" id="userName" required>
+        
+        <input type="text" name="email" placeholder="Email" id= "email" required>
+        
+        
+        <input type="password" name="password" placeholder="Password" id='password' required>
+        
+        <input type="password" name="confirmedpassword" placeholder="Confirm Password" id='confirmedpassword' required>
+        
+        <input class='btn btn-primary' type="submit" value="Register">
+        <a href="/login">Already have an account? Login here.</a>
+        
+        
+      </fieldset>
+    </form>
+  </div>
+</div>

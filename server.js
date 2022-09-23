@@ -2,9 +2,16 @@ require("dotenv").config({ path: "./config/.env" });
 
 const express = require("express");
 const app = express();
-
-// const mainRoutes = require("./routes/main");
+const mongoose = require("mongoose");
+const passport = require("passport");
+const session = require("express-session");
+const MongoStore = require("connect-mongo")(session);
+const connectDB = require("./config/db");
+const mainRoutes = require("./routes/main");
 const stockRoutes = require("./routes/stocks");
+
+require("./config/passport")(passport);
+connectDB();
 
 app.set("view engine", "ejs");
 
@@ -12,7 +19,21 @@ app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// app.use("/", mainRoutes);
+// Express Sessions
+app.use(
+  session({
+    secret: "secret pass",
+    resave: false,
+    saveUninitialized: false,
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  })
+);
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use("/", mainRoutes);
 app.use("/stocks", stockRoutes);
 
 app.listen(process.env.PORT, () => {

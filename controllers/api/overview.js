@@ -6,6 +6,7 @@ const fetchOverview = async (apikey, symbol) => {
   const response = await axios.get(endpoint);
 
   return Object.keys(response.data).length == 0 ? undefined : response.data;
+  // return response.data;
 };
 
 module.exports = fetchOverview;

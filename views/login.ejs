@@ -1,0 +1,25 @@
+<%- include('partials/header') %>
+<body>
+
+<div class="wrapper">
+  <div class="loginContainer">
+    <form action="/login" method="post">
+      <fieldset>
+        <legend><h1>Login</h1></legend>
+        <a href="/">Don't have an account? Signup here</a>
+        
+        <!-- <input type="text" name="email" placeholder="Email" value= "" required> -->
+        
+        <input type="text" name="username" placeholder="Username" value= "" required>
+        
+        <input type="password" name="password" placeholder="Password" id='password' required>
+        
+        <input class='btn btn-primary' type="submit" value="Login">
+        
+        
+      </fieldset>
+    </form>
+  </div>
+</div>
+
+</body>

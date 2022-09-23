@@ -5,6 +5,7 @@ const fetchNews = async (apikey, symbol) => {
 
   const response = await axios.get(endpoint);
 
+  // console.log(response.data);
   return response.data.items == "0" ? undefined : response.data;
 };
 

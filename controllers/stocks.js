@@ -40,7 +40,7 @@ const getSpecificStock = async (req, res) => {
     const data = {
       overview: overview,
       quote: dailyQuote["Global Quote"],
-      news: news.feed,
+      news: news.feed ? news.feed.slice(0, 5) : news.feed,
     };
     console.log(data);
 
