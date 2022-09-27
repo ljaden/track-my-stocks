@@ -7,7 +7,7 @@ const { getStocks, getSpecificStock } = require("../controllers/stocks");
 const { ensureAuth, ensureGuest } = require("../middleware/auth");
 
 router.get("/", ensureAuth, getSearch);
-router.post("/", postSearch);
+router.post("/", ensureAuth, postSearch);
 
 router.get("/ticker", ensureAuth, getSpecificStock);
 

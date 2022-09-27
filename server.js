@@ -9,6 +9,7 @@ const MongoStore = require("connect-mongo")(session);
 const connectDB = require("./config/db");
 const mainRoutes = require("./routes/main");
 const stockRoutes = require("./routes/stocks");
+const dashboardRoutes = require("./routes/dashboard");
 
 require("./config/passport")(passport);
 connectDB();
@@ -35,6 +36,7 @@ app.use(passport.session());
 
 app.use("/", mainRoutes);
 app.use("/stocks", stockRoutes);
+app.use("/dashboard", dashboardRoutes);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server listening on PORT: ${process.env.PORT}`);
