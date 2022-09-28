@@ -1,30 +1,34 @@
 <%- include('partials/header') %>
-<%- include('partials/navbar') %>
+<%- include('components/navbar.ejs') %>
 
-<h1>$100</h1>
 
 <!-- A button to open the popup form -->
-<button class="open-button btn btn-primary" onclick="openForm()">+</button>
+<div class="container">
+  <button class="open-button btn btn-primary" onclick="openForm()">+</button>
+</div>
 
 <!-- The form -->
 <div class="form-popup" id="myForm">
   <form action="/dashboard" class="form-container" method="post">
     <h2>Add a new stock</h2>
 
-    <input type="text" placeholder="$Ticker" name="ticker" required>
+    <input type="text" placeholder="$Ticker" name="ticker" required />
 
-    <input type="text" placeholder="# of Shares" name="shares" required>
+    <input type="text" placeholder="# of Shares" name="shares" required />
 
-    <input type="text" placeholder="Total Cost" name="cost" required>
+    <input type="text" placeholder="Cost Per Share" name="cost" required />
 
     <button type="text" class="btn">Add</button>
-    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">
+      Close
+    </button>
   </form>
 </div>
 
-
 <main>
-    <table class="table table-hover">
+  <div class="container">
+<h1 id="portfolioValue">$<%= stocks.value %></h1>
+  <table class="table table-hover">
     <thead>
       <tr>
         <th>Ticker</th>
@@ -37,27 +41,29 @@
     </thead>
 
     <tbody>
-          <% stocks.forEach(stock => {%>
-            <tr>
-              <td><%= stock.ticker%></td>
-              <td><%= stock.shares%></td>
-              <td>$<%= stock.price%></td>
-              <td>$<%= stock.profitLoss%></td>
-              <td>$<%= stock.avgCPS%></td>
-              <td><%= stock.equity%></td>
-            </tr>
-          <%})%>
+      <% stocks.forEach(stock => {%>
+      <tr>
+        <td><%= stock.ticker%></td>
+        <td><%= stock.shares%></td>
+        <td>$<%= stock.price%></td>
+        <td>$<%= stock.profitLoss%></td>
+        <td>$<%= stock.avgCPS%></td>
+        <td>$<%= stock.equity%></td>
+      </tr>
+      <%})%>
     </tbody>
-    </table>
-  </main>
+  </table>
+</div>
+</main>
 
 <script>
   function openForm() {
-  document.getElementById("myForm").style.display = "block";
-}
+    document.getElementById("myForm").style.display = "block";
+  }
 
-function closeForm() {
-  document.getElementById("myForm").style.display = "none";
-}
+  function closeForm() {
+    document.getElementById("myForm").style.display = "none";
+  }
+
 </script>
-  <%- include('partials/footer') %>
+<%- include('partials/footer') %>

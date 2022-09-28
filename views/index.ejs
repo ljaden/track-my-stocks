@@ -1,16 +1,27 @@
-<%- include('partials/header') %>
-<%- include('partials/navbar-index') %>
+<%- include('partials/login-header') %> 
+<%- include('components/index-navbar') %>
 
-<div class="wrapper">
-  <h1>The Stonks Tracker App</h1>
-</div>
+<!-- Mashead header-->
+<header class="masthead">
+  <div class="container px-5">
+      <div class="row gx-5 align-items-center">
+          <div class="col-lg-6">
+              <!-- Mashead text and app badges-->
+              <div class="mb-5 mb-lg-0 text-center text-lg-start">
+                <h1 class="display-1 lh-1 mb-3">Keep track of all your assets.</h1>
+                <p class="lead fw-normal text-muted mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis aperiam autem eaque repellat vel molestiae architecto.</p>
+                <div class="d-flex flex-column flex-lg-row justify-content-center">
+                  <a class="btn btn-primary btn-lg" href="/signup">Sign Up</a>
+                </div>
+              </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="masthead-img">
+              <img src="https://img.icons8.com/bubbles/500/000000/apple-stocks.png"/>     
 
-<div class="wrapper">
-  <small>Track all your STONKS in one place</small>
-</div>
-
-<div class="wrapper">
-  <img src="https://images.pexels.com/photos/534216/pexels-photo-534216.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" style="width: 800px;">  
-</div>
-
+            </div>
+          </div>
+      </div>
+  </div>
+</header>
 <%- include('partials/footer') %>
