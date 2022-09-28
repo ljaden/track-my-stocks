@@ -1,0 +1,17 @@
+.masthead {
+  background-color: #f8f9fa;
+  padding-top: 5.5rem;
+  padding-bottom: 5rem;
+}
+.masthead .masthead-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+main {
+  position: relative;
+  padding-top: 5.5rem;
+  padding-bottom: 5.5rem;
+}
