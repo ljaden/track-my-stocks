@@ -9,6 +9,9 @@ router.get("/", ensureAuth, async (req, res) => {
   const stocks = await Portfolio.find({ user: req.user.id });
 
   console.log(stocks);
+  // const value =
+  // console.log(value);
+  stocks["value"] = stocks.reduce((total, count) => total + count.equity, 0);
 
   res.render("dashboard", { stocks: stocks });
 });
@@ -23,8 +26,8 @@ router.post("/", async (req, res) => {
       shares: req.body.shares,
       price: 9999,
       profitLoss: 9999,
-      avgCPS: req.body.cost / req.body.shares,
-      equity: 999,
+      avgCPS: req.body.cost,
+      equity: req.body.shares * req.body.cost,
       user: req.user.id,
     });
 
