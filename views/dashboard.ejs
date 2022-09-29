@@ -43,7 +43,13 @@
     <tbody>
       <% stocks.forEach(stock => {%>
       <tr>
-        <td><%= stock.ticker%></td>
+        <td><%= stock.ticker%>
+          <form action="/dashboard/deleteStock/<%=stock.id%>?_method=DELETE"
+            method="POST">
+           
+            <button type="submit"><i class="fa-solid fa-trash-can"></i></button>
+          </form>
+        </td>
         <td><%= stock.shares%></td>
         <td>$<%= stock.price%></td>
         <td>$<%= stock.profitLoss%></td>

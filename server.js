@@ -10,6 +10,7 @@ const connectDB = require("./config/db");
 const mainRoutes = require("./routes/main");
 const stockRoutes = require("./routes/stocks");
 const dashboardRoutes = require("./routes/dashboard");
+const methodOverride = require("method-override");
 
 require("./config/passport")(passport);
 connectDB();
@@ -19,6 +20,8 @@ app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use(methodOverride("_method"));
 
 // Express Sessions
 app.use(

@@ -42,7 +42,7 @@ const getSpecificStock = async (req, res) => {
       quote: dailyQuote["Global Quote"],
       news: news.feed ? news.feed.slice(0, 5) : news.feed,
     };
-    console.log(data);
+    // console.log(data);
 
     res.render("stocks", { stock: data });
     // res.status(200).json(data);
