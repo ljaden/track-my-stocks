@@ -8,7 +8,7 @@ const Portfolio = require("../models/Portfolio");
 router.get("/", ensureAuth, async (req, res) => {
   const stocks = await Portfolio.find({ user: req.user.id });
 
-  console.log(stocks);
+  // console.log(stocks);
   // const value =
   // console.log(value);
   stocks["value"] = stocks.reduce((total, count) => total + count.equity, 0);
@@ -33,6 +33,17 @@ router.post("/", async (req, res) => {
 
     console.log("New stock has been added");
 
+    res.redirect("/dashboard");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.delete("/deleteStock/:id", async (req, res) => {
+  try {
+    const d = await Portfolio.findByIdAndDelete({ _id: req.params.id });
+
+    // console.log(d);
     res.redirect("/dashboard");
   } catch (err) {
     console.log(err);
