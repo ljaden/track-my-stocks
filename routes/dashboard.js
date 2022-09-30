@@ -9,6 +9,7 @@ const Price = require("../models/Price");
 const fetchDailyQuote = require("../controllers/api/dailyQuote");
 
 router.get("/", ensureAuth, async (req, res) => {
+  // const stocks = await Portfolio.find({ user: req.user.id });
   const stocks = await Portfolio.find({ user: req.user.id }).populate("price");
 
   // console.log(stocks);
@@ -26,12 +27,12 @@ router.post("/", async (req, res) => {
 
     /*
      */
-    const fe = await Price.findOne({ ticker: req.body.ticker });
+    let quote = await Price.findOne({ ticker: req.body.ticker });
 
-    if (fe) {
+    if (quote) {
       // if data is returned
       const timeNow = Date.now();
-      const lastUpdated = fe["requestedOn"];
+      const lastUpdated = quote["requestedOn"];
       const daysAgo = (timeNow - lastUpdated.getTime()) / 86400000;
 
       console.log("daysAgo", daysAgo);
@@ -39,10 +40,7 @@ router.post("/", async (req, res) => {
         // if last update was over 12 hours
         console.log("hello");
 
-        const quote = await fetchDailyQuote(
-          process.env.API_KEY,
-          req.body.ticker.toUpperCase()
-        );
+        quote = await fetchDailyQuote(process.env.API_KEY, req.body.ticker);
         // Update document
         await Price.updateOne(
           {
@@ -66,10 +64,7 @@ router.post("/", async (req, res) => {
       }
     } else {
       // else null
-      const quote = await fetchDailyQuote(
-        process.env.API_KEY,
-        req.body.ticker.toUpperCase()
-      );
+      quote = await fetchDailyQuote(process.env.API_KEY, req.body.ticker);
 
       await Price.create({
         ticker: req.body.ticker.toUpperCase(),
@@ -87,15 +82,18 @@ router.post("/", async (req, res) => {
     /*
      */
 
-    console.log("efefef", fe);
+    const tempt = await Price.findOne({ ticker: req.body.ticker });
+
+    console.log(tempt, "tempt");
+
     await Portfolio.create({
       ticker: req.body.ticker,
       company: "placeholder",
       shares: req.body.shares,
-      price: fe,
+      price: await Price.findOne({ ticker: req.body.ticker }),
       profitLoss: 9999,
       avgCPS: req.body.cost,
-      equity: req.body.shares * req.body.cost,
+      equity: (req.body.shares * req.body.cost).toFixed(2),
       user: req.user.id,
     });
 
