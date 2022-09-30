@@ -53,7 +53,7 @@
         <td><%= stock.shares%></td>
         <td>$<%= stock.price.currPrice%></td>
         <!-- <td>$<%= stock.profitLoss%></td> -->
-        <td>$<%= (stock.equity - stock.price.currPrice * stock.shares).toFixed(2)%></td>
+        <td>$<%= ((stock.price.currPrice * stock.shares) - stock.equity).toFixed(2)%></td>
         <td>$<%= stock.avgCPS%></td>
         <td>$<%= stock.equity%></td>
       </tr>
