@@ -4,15 +4,19 @@ const authController = require("../controllers/auth");
 const { ensureAuth, ensureGuest } = require("../middleware/auth");
 
 const Portfolio = require("../models/Portfolio");
+const Price = require("../models/Price");
+
+const fetchDailyQuote = require("../controllers/api/dailyQuote");
 
 router.get("/", ensureAuth, async (req, res) => {
-  const stocks = await Portfolio.find({ user: req.user.id });
+  const stocks = await Portfolio.find({ user: req.user.id }).populate("price");
 
   // console.log(stocks);
   // const value =
   // console.log(value);
   stocks["value"] = stocks.reduce((total, count) => total + count.equity, 0);
 
+  // console.log(req.user);
   res.render("dashboard", { stocks: stocks });
 });
 
@@ -20,11 +24,75 @@ router.post("/", async (req, res) => {
   try {
     console.log(req.body);
 
+    /*
+     */
+    const fe = await Price.findOne({ ticker: req.body.ticker });
+
+    if (fe) {
+      // if data is returned
+      const timeNow = Date.now();
+      const lastUpdated = fe["requestedOn"];
+      const daysAgo = (timeNow - lastUpdated.getTime()) / 86400000;
+
+      console.log("daysAgo", daysAgo);
+      if (daysAgo > 0.05) {
+        // if last update was over 12 hours
+        console.log("hello");
+
+        const quote = await fetchDailyQuote(
+          process.env.API_KEY,
+          req.body.ticker.toUpperCase()
+        );
+        // Update document
+        await Price.updateOne(
+          {
+            ticker: req.body.ticker,
+          },
+          {
+            openPrice: quote["Global Quote"]["02. open"],
+            highPrice: quote["Global Quote"]["03. high"],
+            lowPrice: quote["Global Quote"]["04. low"],
+            currPrice: quote["Global Quote"]["05. price"],
+            volume: quote["Global Quote"]["06. volume"],
+            tradingDay: quote["Global Quote"]["07. latest trading day"],
+            prevClose: quote["Global Quote"]["08. previous close"],
+            change: quote["Global Quote"]["09. change"],
+            changePercentage: quote["Global Quote"]["10. change percent"],
+            requestedOn: Date.now(),
+          }
+        );
+
+        console.log(`${req.body.ticker} updated in Price`);
+      }
+    } else {
+      // else null
+      const quote = await fetchDailyQuote(
+        process.env.API_KEY,
+        req.body.ticker.toUpperCase()
+      );
+
+      await Price.create({
+        ticker: req.body.ticker.toUpperCase(),
+        openPrice: quote["Global Quote"]["02. open"],
+        highPrice: quote["Global Quote"]["03. high"],
+        lowPrice: quote["Global Quote"]["04. low"],
+        currPrice: quote["Global Quote"]["05. price"],
+        volume: quote["Global Quote"]["06. volume"],
+        tradingDay: quote["Global Quote"]["07. latest trading day"],
+        prevClose: quote["Global Quote"]["08. previous close"],
+        change: quote["Global Quote"]["09. change"],
+        changePercentage: quote["Global Quote"]["10. change percent"],
+      });
+    }
+    /*
+     */
+
+    console.log("efefef", fe);
     await Portfolio.create({
       ticker: req.body.ticker,
       company: "placeholder",
       shares: req.body.shares,
-      price: 9999,
+      price: fe,
       profitLoss: 9999,
       avgCPS: req.body.cost,
       equity: req.body.shares * req.body.cost,

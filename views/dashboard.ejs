@@ -12,7 +12,7 @@
   <form action="/dashboard" class="form-container" method="post">
     <h2>Add a new stock</h2>
 
-    <input type="text" placeholder="$Ticker" name="ticker" required />
+    <input type="text" placeholder="$Ticker" name="ticker" onkeyup="this.value = this.value.toUpperCase()" required />
 
     <input type="text" placeholder="# of Shares" name="shares" required />
 
@@ -51,7 +51,7 @@
           </form>
         </td>
         <td><%= stock.shares%></td>
-        <td>$<%= stock.price%></td>
+        <td>$<%= stock.price.currPrice%></td>
         <td>$<%= stock.profitLoss%></td>
         <td>$<%= stock.avgCPS%></td>
         <td>$<%= stock.equity%></td>

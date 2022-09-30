@@ -11,7 +11,8 @@ const portfolioSchema = new mongoose.Schema({
     type: Number,
   },
   price: {
-    type: Number,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Price",
   },
   profitLoss: {
     type: Number,
