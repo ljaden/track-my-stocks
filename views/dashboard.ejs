@@ -43,7 +43,7 @@
     <tbody>
       <% stocks.forEach(stock => {%>
       <tr>
-        <td><%= stock.ticker%>
+        <td><a href='/stocks/ticker?symbol=<%=stock.ticker%>'><%= stock.ticker%></a>
           <form action="/dashboard/deleteStock/<%=stock.id%>?_method=DELETE"
             method="POST">
            
