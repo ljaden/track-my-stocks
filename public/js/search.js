@@ -37,23 +37,18 @@ const displayResults = (data) => {
     .map((el) => {
       return `
       <a href="/stocks/ticker?symbol=${el["1. symbol"]}")">
-      <ul>
-        <li>${el["1. symbol"]}</li>
-        <li>${el["2. name"]}</li>
-        <li>${el["3. type"]}</li>
-        <li>${el["4. region"]}</li>
-        <li>${el["5. marketOpen"]}</li>
-        <li>${el["6. marketClose"]}</li>
-        <li>${el["7. timezone"]}</li>
-        <li>${el["8. currency"]}</li>
-        <li>${el["9. matchScore"]}</li>
-      </ul>
-      </a>
-    `;
+        <ul>
+          <li>
+            <strong>${el["1. symbol"]}</strong> - ${el["2. name"]}
+          </li>
+        </ul>
+      </a>`;
     })
     .join("");
 
-  document.getElementById("results").innerHTML = htmlStr;
+  const res = document.getElementById("results");
+  res.style.display = "block";
+  res.innerHTML = htmlStr;
 };
 
 const fetchData = (ticker) => {
