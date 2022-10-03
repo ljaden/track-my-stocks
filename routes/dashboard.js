@@ -38,7 +38,6 @@ router.post("/", async (req, res) => {
       console.log("daysAgo", daysAgo);
       if (daysAgo > 0.05) {
         // if last update was over 12 hours
-        console.log("hello");
 
         quote = await fetchDailyQuote(process.env.API_KEY, req.body.ticker);
         // Update document
