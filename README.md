@@ -30,7 +30,7 @@ npm install
 
 ## Start Server
 
-`node server,js`
+`node server.js`
 npm
 
 ```
