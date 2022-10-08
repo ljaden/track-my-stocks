@@ -15,3 +15,10 @@ main {
   padding-top: 5.5rem;
   padding-bottom: 5.5rem;
 }
+
+.positive {
+  color: green;
+}
+.negative {
+  color: red;
+}

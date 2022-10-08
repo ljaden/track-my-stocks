@@ -15,9 +15,12 @@ router.get("/", ensureAuth, async (req, res) => {
   // console.log(stocks);
   // const value =
   // console.log(value);
-  stocks["value"] = stocks.reduce((total, count) => total + count.equity, 0);
+  stocks["value"] = stocks.reduce(
+    (total, count) => total + count.marketValue,
+    0
+  );
 
-  // console.log(req.user);
+  console.log(stocks);
   res.render("dashboard", { stocks: stocks });
 });
 
@@ -28,7 +31,7 @@ router.post("/", async (req, res) => {
     /*
      */
     let quote = await Price.findOne({ ticker: req.body.ticker });
-
+    console.log("QUOTE".quote);
     if (quote) {
       // if data is returned
       const timeNow = Date.now();
@@ -82,17 +85,22 @@ router.post("/", async (req, res) => {
      */
 
     const tempt = await Price.findOne({ ticker: req.body.ticker });
+    // console.log(tempt, "tempt");
 
-    console.log(tempt, "tempt");
+    const price = await Price.findOne({ ticker: req.body.ticker });
 
     await Portfolio.create({
       ticker: req.body.ticker,
       company: "placeholder",
       shares: req.body.shares,
-      price: await Price.findOne({ ticker: req.body.ticker }),
-      profitLoss: 9999,
+      price: price,
+      profitLoss: (
+        price.currPrice * req.body.shares -
+        req.body.shares * req.body.cost
+      ).toFixed(2),
       avgCPS: req.body.cost,
-      equity: (req.body.shares * req.body.cost).toFixed(2),
+      // equity: (req.body.shares * req.body.cost).toFixed(2),
+      marketValue: price.currPrice * req.body.shares,
       user: req.user.id,
     });
 

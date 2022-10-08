@@ -20,7 +20,7 @@ const portfolioSchema = new mongoose.Schema({
   avgCPS: {
     type: Number,
   },
-  equity: {
+  marketValue: {
     type: Number,
   },
   user: {
