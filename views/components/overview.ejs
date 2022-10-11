@@ -10,7 +10,11 @@
       <%=stock.overview.Name%> (<%= stock.overview.Symbol %>)
     </h1>
     <strong>$<%=Number(stock.quote["05. price"]).toFixed(2)%></strong>
-    <small><%=stock.quote["10. change percent"]%></small>
+    <small class="<%= stock.quote["09. change"] > 0 ? "positive" : "negative"%>">
+      <i class="<%= stock.quote["09. change"] > 0 ? "fa-solid fa-caret-up" : "fa-solid fa-caret-down"%>"></i>
+      <%=Math.abs(stock.quote["09. change"]).toFixed(2)%>
+      (<%= Math.abs(parseFloat(stock.quote["10. change percent"]).toFixed(2))%>%)
+    </small>
   </div>
 </div>
 
