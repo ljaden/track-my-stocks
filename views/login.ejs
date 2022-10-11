@@ -1,24 +1,34 @@
 <%- include('partials/login-header') %>
 <body>
+  <main class="wrapper">
+    <div class="loginContainer">
+      <form action="/login" method="post">
+        <fieldset>
+          <legend><h1>LOGIN</h1></legend>
 
-<main class="wrapper">
-  <div class="loginContainer">
-    <form action="/login" method="post">
-      <fieldset>
-        <legend><h1>LOGIN</h1></legend>
-        
-        <input type="text" name="email" placeholder="Email" value= "" required>
-        
-        <input type="password" name="password" placeholder="Password" id='password' required>
-        
-        <input class='btn btn-primary' type="submit" value="Login">
-       <div>
-         <a href="/signup">Don't have an account? Signup here</a>
-       </div> 
-      </fieldset>
-    </form>
-  </div>
-</main>
+          <input
+            type="text"
+            name="email"
+            placeholder="Email"
+            value=""
+            required
+          />
 
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            id="password"
+            required
+          />
+
+          <input class="btn btn-primary" type="submit" value="Login" />
+          <div>
+            <a href="/signup">Don't have an account? Signup here</a>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </main>
 </body>
 <%- include('partials/login-footer') %>
