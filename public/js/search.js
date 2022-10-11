@@ -27,7 +27,7 @@ const fetchTickers = async (str) => {
 
     const results = await res.json();
 
-    console.log(results);
+    // console.log(results);
     displayResults(results);
   } catch (err) {
     console.error(err);

@@ -100,7 +100,7 @@ router.post("/", async (req, res) => {
       ).toFixed(2),
       avgCPS: req.body.cost,
       // equity: (req.body.shares * req.body.cost).toFixed(2),
-      marketValue: price.currPrice * req.body.shares,
+      marketValue: (price.currPrice * req.body.shares).toFixed(2),
       user: req.user.id,
     });
 
