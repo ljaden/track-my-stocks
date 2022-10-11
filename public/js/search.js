@@ -1,13 +1,15 @@
 const searchBar = document.getElementById("search-bar");
+let typingTimer;
+let idleTimer = 1500;
 
 searchBar.addEventListener("keyup", (e) => {
-  console.log(e.target.value);
+  clearTimeout(typingTimer);
   const searchString = e.target.value;
 
   if (searchString.length > 2) {
-    const filteredSearch = fetchTickers(searchString);
-    // console.log(filteredSearch);
-    // displayResults(filteredSearch);
+    // const filteredSearch = fetchTickers(searchString);
+    // console.log(searchString);
+    typingTimer = setTimeout(fetchTickers, idleTimer, searchString);
   }
 });
 
@@ -49,8 +51,4 @@ const displayResults = (data) => {
   const res = document.getElementById("results");
   res.style.display = "block";
   res.innerHTML = htmlStr;
-};
-
-const fetchData = (ticker) => {
-  console.log(`${ticker} was clicked`);
 };
