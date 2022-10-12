@@ -1,0 +1,16 @@
+<div class="form-popup" id="myForm">
+  <form action="/dashboard" class="form-container" method="post">
+    <h2>Add a new stock</h2>
+
+    <input type="text" placeholder="$Ticker" name="ticker" onkeyup="this.value = this.value.toUpperCase()" required />
+
+    <input type="text" placeholder="# of Shares" name="shares" required />
+
+    <input type="text" placeholder="Cost Per Share" name="cost" required />
+
+    <button type="text" class="btn">Add</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">
+      Close
+    </button>
+  </form>
+</div>

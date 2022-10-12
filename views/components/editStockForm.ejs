@@ -1,0 +1,34 @@
+<div class="modal fade" id="editStock" tabindex="-1" aria-labelledby="editStockLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <img src="" alt="" width="50" class="rounded-circle px-2">
+        <h5 class="modal-title" id="editStockLabel"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editStock" name="editStock" method="POST">
+          <div class="">
+            <label for="ticker" class="col-form-label">Ticker</label>
+            <input type="text" class="form-control" id="ticker" name="ticker">
+          </div>
+          <div class="">
+            <label for="shares" class="col-form-label">Shares</label>
+            <input type="text" class="form-control" id="shares" name="shares">
+          </div>
+          <div class="">
+            <label for="avgcps" class="col-form-label">Cost Per Share</label>
+            <input type="text" class="form-control" id="avgcps" name="avgcps">
+          </div>
+          <div>
+            <input type="hidden" id="payload" name="payload" value="">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-success">Save changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

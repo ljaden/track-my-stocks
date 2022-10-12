@@ -1,6 +1,71 @@
 <%- include('partials/header') %>
 <%- include('components/navbar.ejs') %>
 
+<main>
+  <div class="container">
+    <h1>Portfolio Value</h1>
+    <h2 id="portfolioValue">$<%= stocks.value%></h2>
+
+    <table class="table table-borderless table-hover table-striped table-responsive mt-3 p-4">
+      <thead>
+        <tr class="border-bottom">
+          <th><span class="ml-2">Action</span></th>
+          <th><span class="ml-2">Ticker</span></th>
+          <th><span class="ml-2">Shares</span></th>
+          <th><span class="ml-2">Average CPS</span></th>
+          <th><span class="ml-2">Price</span></th>
+          <th><span class="ml-2">Market Value</span></th>
+          <th><span class="ml-4">P/L</span></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% stocks.forEach(stock => {%>
+        <tr class="border-bottom">
+          <!-- Action Column -->
+          <td>
+            <div class="d-flex">
+              <!-- Button trigger modal -->
+              <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editStock" data-bs-info="<%= JSON.stringify(stock) %>">
+                <i class="fa-solid fa-pen"></i>
+              </button>
+
+              <!-- Delete stocks button -->
+              <form action="/dashboard/deleteStock/<%=stock.id%>?_method=DELETE" method="POST" onsubmit="return confirm('Are you sure?');">
+                <input style="font-family: FontAwesome" value="&#xf1f8;" type="submit" class="btn">
+              </form>
+            </div>
+          </td>
+
+          <!-- Ticker Column -->
+          <td>
+            <img src="https://financialmodelingprep.com/image-stock/<%= stock.ticker%>.jpg" alt="" width="20" class="rounded-circle">
+            <a href='/stocks/ticker?symbol=<%=stock.ticker%>'><%= stock.ticker%></a>
+          </td>
+
+          <!-- Shares Column -->
+          <td><%= stock.shares%></td>
+          
+          <!-- Average Cost Per Share Column-->
+          <td>$<%= stock.avgCPS%></td>
+
+          <!-- Price Column -->
+          <td>$<%= stock.price.currPrice%></td>
+
+          <!-- Market Value Column -->
+          <td>$<%= stock.marketValue%></td>
+
+          <!-- P/L Column -->
+          <td class="<%= stock.profitLoss > 0 ? "positive": "negative" %>"><i class="<%= stock.profitLoss > 0 ? "fa-solid fa-caret-up": "fa-solid fa-caret-down" %>"></i>$<%= Math.abs(stock.profitLoss)%></td>
+          </tr>
+        <%})%>
+      </tbody>
+    </table>
+  </div>
+</main>
+
+<!-- Edit Stocks Form-->
+<%- include('components/editStockForm.ejs') %>
 
 <!-- A button to open the popup form -->
 <div class="container">
@@ -8,61 +73,39 @@
 </div>
 
 <!-- The form -->
-<div class="form-popup" id="myForm">
-  <form action="/dashboard" class="form-container" method="post">
-    <h2>Add a new stock</h2>
-
-    <input type="text" placeholder="$Ticker" name="ticker" onkeyup="this.value = this.value.toUpperCase()" required />
-
-    <input type="text" placeholder="# of Shares" name="shares" required />
-
-    <input type="text" placeholder="Cost Per Share" name="cost" required />
-
-    <button type="text" class="btn">Add</button>
-    <button type="button" class="btn cancel" onclick="closeForm()">
-      Close
-    </button>
-  </form>
-</div>
-
-<main>
-  <div class="container">
-    <h1>Portfolio Value</h1>
-    <h2 id="portfolioValue">$<%= stocks.value%></h2>
-
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Ticker</th>
-        <th>Shares</th>
-        <th>Average CPS</th>
-        <th>Price</th>
-        <th>Market Value</th>
-        <th>P/L</th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% stocks.forEach(stock => {%>
-      <tr>
-        <td><a href='/stocks/ticker?symbol=<%=stock.ticker%>'><%= stock.ticker%></a>
-          <form action="/dashboard/deleteStock/<%=stock.id%>?_method=DELETE"
-            method="POST">
-           
-            <button type="submit"><i class="fa-solid fa-trash-can"></i></button>
-          </form>
-        </td>
-        <td><%= stock.shares%></td>
-        <td>$<%= stock.avgCPS%></td>
-        <td>$<%= stock.price.currPrice%></td>
-        <td>$<%= stock.marketValue%></td>
-        <td class="<%= stock.profitLoss > 0 ? "positive": "negative" %>"><i class="<%= stock.profitLoss > 0 ? "fa-solid fa-caret-up": "fa-solid fa-caret-down" %>"></i>$<%= Math.abs(stock.profitLoss)%></td>
-      </tr>
-      <%})%>
-    </tbody>
-  </table>
-</div>
-</main>
+<%- include('components/newStocksForm.ejs') %>
 
 <script src="/js/addAssestsForm.js"></script>
+<script >
+  const exampleModal = document.getElementById('editStock')
+  exampleModal.addEventListener('show.bs.modal', function (event) {
+
+  // Button that triggered the modal
+  const button = event.relatedTarget
+  // console.log(button)
+  // Extract info from data-bs-* attributes
+  const recipient = JSON.parse(button.getAttribute('data-bs-info'))
+  // console.log(recipient, typeof recipient)
+  // console.log(JSON.parse(recipient), typeof JSON.parse(recipient))
+  //
+  // Update the modal's content.
+  const modalTitle = exampleModal.querySelector('.modal-title')
+  const modalHeaderImg = exampleModal.querySelector('.modal-header img')
+  const modalBodyTicker = exampleModal.querySelector('.modal-body #ticker')
+  const modalBodyForm = exampleModal.querySelector('.modal-body form')
+  const modalBodyShares = exampleModal.querySelector('.modal-body #shares')
+  const modalBodyAvgCPS = exampleModal.querySelector('.modal-body #avgcps')
+  const payload = exampleModal.querySelector('form #payload')
+
+  modalTitle.textContent = recipient.ticker 
+  modalHeaderImg.src= `https://financialmodelingprep.com/image-stock/${recipient.ticker}.jpg`
+
+  modalBodyTicker.value = recipient.ticker
+  modalBodyShares.value = recipient.shares
+  modalBodyAvgCPS.value = recipient.avgCPS
+  modalBodyForm.action = `/dashboard/editStock/${recipient._id}?_method=PUT`
+
+  payload.value = recipient.price.currPrice
+})
+</script>
 <%- include('partials/footer') %>
