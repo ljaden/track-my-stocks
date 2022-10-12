@@ -20,11 +20,11 @@ router.get("/", ensureAuth, async (req, res) => {
     0
   );
 
-  console.log(stocks);
+  // console.log(stocks);
   res.render("dashboard", { stocks: stocks });
 });
 
-router.post("/", async (req, res) => {
+router.post("/", ensureAuth, async (req, res) => {
   try {
     console.log(req.body);
 
@@ -112,11 +112,40 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.delete("/deleteStock/:id", async (req, res) => {
+router.delete("/deleteStock/:id", ensureAuth, async (req, res) => {
   try {
     const d = await Portfolio.findByIdAndDelete({ _id: req.params.id });
 
     // console.log(d);
+    res.redirect("/dashboard");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.put("/editStock/:id", ensureAuth, async (req, res) => {
+  try {
+    console.log(req.params.id);
+    console.log(req.body);
+
+    const after = await Portfolio.findByIdAndUpdate(
+      req.params.id,
+      {
+        ticker: req.body.ticker,
+        shares: req.body.shares,
+        avgCPS: req.body.avgcps,
+        profitLoss: (
+          req.body.payload * req.body.shares -
+          req.body.avgcps * req.body.shares
+        ).toFixed(2),
+      },
+      {
+        returnDocument: "after",
+      }
+    );
+
+    // console.log(req.body.shares);
+
     res.redirect("/dashboard");
   } catch (err) {
     console.log(err);
