@@ -15,11 +15,13 @@ router.get("/", ensureAuth, async (req, res) => {
   // console.log(stocks);
   // const value =
   // console.log(value);
-  stocks["value"] = stocks.reduce(
+  portfolioValue = stocks.reduce(
     (total, count) => total + count.marketValue,
     0
   );
+  stocks["value"] = +portfolioValue.toFixed(2);
 
+  console.log(stocks["value"], typeof stocks.value);
   // console.log(stocks);
   res.render("dashboard", { stocks: stocks });
 });
