@@ -4,7 +4,8 @@
   "main": "server.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon ."
+    "start": "node .",
+    "dev": "nodemon ."
   },
   "dependencies": {
     "axios": "^0.27.2",
